@@ -64,6 +64,18 @@ namespace MKP.Azure {
             }
         }
 
+        public void AddBlob(string ContainerName, string BlobName, string MimeType, byte[] bytes)
+        {
+            CloudBlobContainer Container = BlobClient.GetContainerReference(ContainerName);
+            CloudBlockBlob BlockBlob = Container.GetBlockBlobReference(BlobName);
+
+            using (var ms = new System.IO.MemoryStream(bytes)) {
+                BlockBlob.UploadFromStream(ms);
+                BlockBlob.Properties.ContentType = MimeType;
+                BlockBlob.SetProperties();
+            }
+        }
+
         public void AddBlob(string ContainerName, string BlobName, string MimeType, Uri File) {
             CloudBlobContainer Container = BlobClient.GetContainerReference(ContainerName);
             CloudBlockBlob BlockBlob = Container.GetBlockBlobReference(BlobName);

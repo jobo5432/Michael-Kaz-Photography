@@ -1,0 +1,15 @@
+﻿@using web.Models
+
+@{
+    ViewBag.Title = ":: Page Not Found";
+    List<NavLink> Folders = ViewBag.Folders;
+}
+
+@Html.Partial(partialViewName: "Nav", model: Folders)
+
+<div class="outer-container">
+    <div class="inner-container">
+        <h1>Not Found</h1>
+        <p>The page you've requested was not found on this server. Please check the address and try again.</p>
+    </div>
+</div>

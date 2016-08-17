@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Michael Kaz Photography @ViewBag.Title</title>
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" type="text/css" href="/Scripts/vegas/vegas.min.css" />
+    <link rel="stylesheet" type="text/css" href="/Content/bootstrap.min.css"/>
+    <script src="/Scripts/jquery-3.1.0.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/vegas/vegas.min.js"></script>
+
+    @if (IsSectionDefined("CSS")) {
+        @RenderSection("CSS", required: false);
+    }
+    else {
+        <link rel="stylesheet" type="text/css" href="/Content/homepage.css" />
+    }
+
+</head>
+<body>
+    @RenderBody()
+</body>
+</html>

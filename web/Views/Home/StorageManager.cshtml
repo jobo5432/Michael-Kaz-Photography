@@ -1,0 +1,87 @@
+﻿
+@{
+    Layout = null;
+    List<MKP.Google.FolderInfo> Folders = ViewBag.FolderList;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Storage Management - Michael Kaz Photography</title>
+	
+	<script src="/Scripts/jquery-3.1.0.min.js"></script>
+	<script src="/Scripts/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" href="/Content/bootstrap.min.css" />
+	<link rel="stylesheet" href="/Content/font-awesome.min.css" />
+    <link rel="stylesheet" href="/Content/font-awesome.css"/>
+    <link rel="stylesheet" href="/Content/cache-manager.css"/>
+    <link rel="stylesheet" href="/Content/cache-manager.css" />
+
+    <script>
+		$(document).ready(function(){
+			$.getJSON("/Content/cache/cache-config.json", function(d){
+				$('#LastUpdated').text(d.lastUpdated);
+			});
+		});
+	</script>
+</head>
+<body>
+    <div class="container">
+    	<div class="clearfix">
+    		<h2>Storage Management</h2>
+	        <div class="col-xs-2"><strong>Last Updated</strong></div><br/>
+	        <div class="col-xs-6" id="LastUpdated">#date#</div><br/>
+	        <div class="col-xs-4 clearfix" style="margin-top: 24px;">
+	            <form action="/Home/UpdateStorage" method="post">
+	                <button type="submit" class="btn btn-danger">
+	                    <i class="fa fa-download"></i> Update Storage Now
+	                </button>
+	            </form>
+	        </div>
+
+	        <div class="col-xs-12 container" style="margin-top: 48px; margin-bottom: 36px; border-top: solid 1px #eee;">
+	            <h3>Current Storage</h3>
+	            <p>This is what is stored right now. Your site does not actually use the images directly from Google Drive. Rather, the images and folders added to your Google Drive share are copied over to Microsoft Azure Storage. Your images <strong class="text-danger" style="border-bottom: solid 1px #990000;">will not show up</strong> on your site until you update storage using the image above.
+	            </p>
+	            <p>Also note that udpating storage removes all images from the website and re-collects them from your Google Drive share. Depending on a number of factors (mainly number of images and file sizes), this process can
+	                take between 5 and 10 minutes to complete. As such, you should use good judgement when updating the content of your site. Choose a day and time when traffic is likely to be low so as to
+	                not affect your visitors and their experience.
+                </p>
+	        </div>
+	        <div class="col-xs-12 container">
+	            @foreach (var f in Folders) {
+                    <div class="clearfix" style="margin-bottom: 48px;">
+                        <h4>@f.Name</h4>
+                        @foreach (var i in f.Images) {
+                            <div class="col-xs-3">
+                                <div class="panel panel-default cache_panel">
+                                    <div class="panel-heading">
+                                        <span class="lead" style="font-size: 1.2em">@i.Filename</span>
+                                    </div>
+                                    <div class="panel-body">
+                                        <img class="cache_thumb" src="@i.FullPath"/>
+                                    </div>
+                                    <div class="panel-footer">
+                                        @if (i.ByteCount > 500 * 1024) {
+                                            <i class="fa fa-exclamation-circle text-danger">&nbsp;</i><strong class="text-danger"><em>File Size: @Utils.GetFileSizeString(i.ByteCount)</em></strong>
+                                        }
+                                        else {
+                                            <strong><em>File Size: @Utils.GetFileSizeString(i.ByteCount)</em></strong>
+                                        }
+                                        <br/>
+                                        <em style="font-size: 0.85em">(@String.Format("{0} x {1}px", @i.Width, @i.Height))</em>
+                                    </div>
+                                </div>    
+                            </div>
+                        }
+                    </div>
+                }
+	        </div>
+
+    	</div>
+    </div>
+</body>
+</html>

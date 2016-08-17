@@ -1,0 +1,24 @@
+﻿@using web.Models
+@model List<web.Models.HomepageImageInfo>
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<NavLink> Folders = ViewBag.Folders;
+}
+
+@Html.Partial(partialViewName: "Nav", model: Folders)
+<div id="slideshow">&nbsp;</div>
+
+<script>
+    $(document)
+        .ready(function() {
+            var imgs = @Html.Raw(Json.Encode(@Model));
+            //Vegas, Baby... Vegas.
+            $('#slideshow').vegas({
+                delay: 5 * 1000,
+                cover: true,
+                transitionDuration: 2 * 1000,
+                slides: imgs
+            });
+        });
+</script>

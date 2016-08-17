@@ -1,0 +1,30 @@
+﻿@using web.Models
+@model List<web.Models.HomepageImageInfo>
+
+@{
+    ViewBag.Title = ":: " + ViewBag.GalleryName;
+    List<NavLink> Folders = ViewBag.Folders;
+}
+
+@section CSS {
+    <link rel="stylesheet" type="text/css" href="/Content/site.css" />
+}
+
+@Html.Partial(partialViewName: "Nav", model: Folders)
+
+<div class="outer-container row">
+    @{ int imgNum = 1; }
+    @foreach (var i in Model) {
+        <a id="img@imgNum" class="img-link"><img src="@i.src"/></a>
+    }
+</div>
+
+<script>
+
+    $(document).ready(function() {
+        $('.img-link').click(function() {
+            var position = $(this).position();
+            console.log(position);
+        });
+    });
+</script>

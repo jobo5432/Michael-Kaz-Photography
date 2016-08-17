@@ -1,0 +1,39 @@
+﻿@using System.Globalization
+@model List<web.Models.NavLink>
+
+@{
+    var ti = new CultureInfo("en-US", false).TextInfo;
+}
+
+<div id="nav">
+    <a href="/" class="main-link">
+        <h1>Michael Kaz</h1>
+        <h3>Photography</h3>
+    </a>
+    <hr/>
+    <ul>
+        @if (Model != null) {
+            foreach (var link in Model.Where(l => !l.Name.ToLower().Equals("home"))) {
+                <li><a href="/gallery/@link.Name.ToLower()">@ti.ToTitleCase(link.Name.ToLower())</a></li>
+            }
+        }
+    </ul>
+    <hr />
+    <div style="margin: 0px 16px; border: none; text-align: center;">
+        <div class="social-link-container">
+            <a href="https://www.facebook.com/Michael-Kaz-Photography-142212426366" target="_blank">
+                <img src="~/Content/assets/facebook-512.png" title="Visit me on Facebook... "/>
+            </a>
+        </div>
+        <div class="social-link-container">
+            <a href="https://twitter.com/AbsolutKaz" target="_blank">
+                <img src="~/Content/assets/twitter-512.png" title="Visit me on Twitter... "/>
+            </a>
+        </div>
+        <div class="social-link-container">
+            <a href="http://www.modelmayhem.com/1584454" target="_blank">
+                <img src="~/Content/assets/modelmayhem-512.png" title="Visit me on Model Mayhem... "/>
+            </a>
+        </div>
+    </div>
+</div>
